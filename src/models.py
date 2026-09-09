@@ -8,7 +8,7 @@ class FunctionDefinition(BaseModel):
     name: str
     description: str
     parameters: dict[str, Args]
-    returns: str | None = None
+    returns: Args
 
 class PromptEntry(BaseModel):
     prompt:str

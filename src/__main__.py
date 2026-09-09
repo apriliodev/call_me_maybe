@@ -1,13 +1,13 @@
 import argparse
 from pathlib import Path
-
-
+from pipeline import load_json_list
+from models import FunctionDefinition, PromptEntry
 def parse_arg() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--function_definition",
         type=Path,
-        default=Path("data/input/function_definitions.json"),
+        default=Path("data/input/functions_definition.json"),
         help="Path to function definitions JSON file",
     )
     parser.add_argument(
@@ -26,6 +26,8 @@ def parse_arg() -> argparse.Namespace:
 
 def main() -> None:
     args = parse_arg()
+    function = load_json_list(args.function_definition, FunctionDefinition)
+    prompt = load_json_list(args.input, PromptEntry)
     print(args.function_definition, args.input, args.output)
 
 if __name__ == "__main__":
