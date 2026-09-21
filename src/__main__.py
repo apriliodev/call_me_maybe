@@ -1,10 +1,22 @@
+"""Main entry point for function calling with constrained decoding."""
+
 import argparse
 from pathlib import Path
-from pipeline import load_json_list
-from models import FunctionDefinition, PromptEntry
+from src.pipeline import load_json_list
+from src.models import FunctionDefinition, PromptEntry
+
+
 def parse_arg() -> argparse.Namespace:
-    parser = argparse.ArgumentParser()
+    """Parse command line arguments.
+
+    Returns:
+        The parsed command line arguments namespace.
+    """
+    parser = argparse.ArgumentParser(
+        description="Function calling with constrained decoding."
+    )
     parser.add_argument(
+        "--functions_definition",
         "--function_definition",
         type=Path,
         default=Path("data/input/functions_definition.json"),
@@ -24,11 +36,14 @@ def parse_arg() -> argparse.Namespace:
     )
     return parser.parse_args()
 
+
 def main() -> None:
+    """Run the function calling pipeline."""
     args = parse_arg()
-    function = load_json_list(args.function_definition, FunctionDefinition)
-    prompt = load_json_list(args.input, PromptEntry)
-    print(args.function_definition, args.input, args.output)
+    functions = load_json_list(args.functions_definition, FunctionDefinition)
+    prompts = load_json_list(args.input, PromptEntry)
+    print(f"Loaded {len(functions)} functions and {len(prompts)} test prompts.")
+
 
 if __name__ == "__main__":
     main()
