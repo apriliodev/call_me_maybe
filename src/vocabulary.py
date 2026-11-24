@@ -25,8 +25,7 @@ def get_numeric_tokens(vocab: dict[str,int]) -> list[int]:
     numeric_ids: list[int] = []
 
     for token_str, token_id in vocab.items():
-        cleaned = token_str.strip()
-        if cleaned.isdigit() or cleaned in (".", "-"):
+        if token_str.isdigit() or token_str in (".", "-"):
             numeric_ids.append(token_id)
     return numeric_ids
 
